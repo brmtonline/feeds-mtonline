@@ -3,7 +3,7 @@
   <channel>
     <title>MT Online - Notícias de Colíder (MT)</title>
     <link>https://www.mtonline.com.br/</link>
-    <description>Principais notícias da Prefeitura de Colíder (MT), resumidas pela redação do MT Online.</description>
+    <description>Principais notícias da Prefeitura de Colíder (MT), em texto ampliado para publicação no portal MT Online.</description>
     <language>pt-BR</language>
     <pubDate>Sat, 22 Nov 2025 12:00:00 GMT</pubDate>
     <lastBuildDate>Sat, 22 Nov 2025 12:00:00 GMT</lastBuildDate>
@@ -17,9 +17,11 @@
       <pubDate>Thu, 20 Nov 2025 12:00:00 GMT</pubDate>
       <description><![CDATA[
         A Guarda Civil Municipal de Colíder iniciou uma operação especial de fim de ano para reforçar a segurança no trânsito,
-        com foco na área central, bairros e imediações de escolas. A fiscalização mira, principalmente, menores de idade ao
-        volante, motos com escapamento adulterado e som automotivo em volume excessivo, com orientação e autuação em casos
-        de reincidência.
+        com foco na área central, bairros e imediações de escolas. A ação faz parte da estratégia de “tolerância zero” contra
+        menores de idade ao volante, motos com escapamento adulterado e som automotivo em volume excessivo, que têm gerado
+        reclamações de moradores e colocado em risco a integridade de pedestres e condutores. As equipes da GCM realizam
+        abordagens educativas, orientando motoristas e responsáveis legais, mas também aplicam autuações em situações de
+        flagrante desrespeito à legislação ou de reincidência.
       ]]></description>
     </item>
 
@@ -30,10 +32,12 @@
       <guid isPermaLink="true">https://www.colider.mt.gov.br/Imprensa/Noticias/Prefeitura-de-colider-oficializa-entrega-de-veiculo-ao-conselho-tutelar-com-participacao-da-secretaria-de-assistencia-social-5392</guid>
       <pubDate>Wed, 19 Nov 2025 12:00:00 GMT</pubDate>
       <description><![CDATA[
-        A Prefeitura de Colíder fez a entrega simbólica da chave de um veículo destinado ao Conselho Tutelar, com a presença
-        da secretária de Assistência Social, Michele Schenkel. O carro será utilizado em atendimentos institucionais, visitas
-        domiciliares e deslocamentos em áreas urbanas e rurais, dando mais segurança e agilidade às equipes responsáveis pela
-        proteção de crianças e adolescentes no município.
+        A Prefeitura de Colíder oficializou a entrega de um veículo ao Conselho Tutelar do município, em cerimônia que contou
+        com a presença de conselheiros, autoridades locais e da Secretaria de Assistência Social. O automóvel será utilizado
+        em atendimentos de urgência, visitas domiciliares e deslocamentos em áreas urbanas e rurais, garantindo mais agilidade
+        na apuração de denúncias e no acompanhamento de casos de violação de direitos de crianças e adolescentes. A gestão
+        municipal destacou que o reforço estrutural faz parte de um conjunto de ações voltadas ao fortalecimento da rede de
+        proteção social e ao cumprimento do Estatuto da Criança e do Adolescente (ECA).
       ]]></description>
     </item>
 
@@ -44,10 +48,12 @@
       <guid isPermaLink="true">https://www.colider.mt.gov.br/Imprensa/Noticias/Recursos-para-saude-de-colider-gestao-municipal-anuncia-r-500-mil-5389</guid>
       <pubDate>Mon, 17 Nov 2025 12:00:00 GMT</pubDate>
       <description><![CDATA[
-        A Prefeitura de Colíder confirmou o recebimento de R$ 500 mil do Governo do Estado, articulados pelo deputado estadual
-        Nininho, para reforçar serviços de média e alta complexidade do SUS. O resurso já está na conta do município e será
-        aplicado em procedimentos especializados, exames e cirurgias, ampliando a capacidade de atendimento aos pacientes
-        da rede pública de saúde.
+        A Prefeitura de Colíder confirmou o recebimento de R$ 500 mil em recursos destinados à saúde, repassados pelo Governo
+        de Mato Grosso com articulação do deputado estadual Nininho. Os valores serão aplicados principalmente em serviços de
+        média e alta complexidade, como exames especializados, procedimentos cirúrgicos e atendimentos de maior custo, que
+        exigem estrutura e equipe qualificada. De acordo com a gestão municipal, o objetivo é reduzir filas, ampliar o acesso
+        da população aos serviços do SUS e melhorar a qualidade do atendimento em hospitais e unidades de referência, tanto
+        na área urbana quanto na zona rural.
       ]]></description>
     </item>
 
@@ -58,10 +64,12 @@
       <guid isPermaLink="true">https://www.colider.mt.gov.br/Imprensa/Noticias/Prefeitura-de-colider-realiza-entrega-de-equipamentos-escolares-para-oito-unidades-da-rede-municipal-5390</guid>
       <pubDate>Mon, 17 Nov 2025 11:00:00 GMT</pubDate>
       <description><![CDATA[
-        A Secretaria Municipal de Educação de Colíder entregou novos equipamentos e materiais para oito escolas da rede
-        pública, entre elas Atalaia, Bom Jesus, Fábio Ribeiro e Sol Nascente. Segundo a gestão, as aquisições fazem parte de
-        um plano de modernização da estrutura física e pedagógica, garantindo melhores condições de trabalho aos servidores
-        e mais conforto aos estudantes.
+        A Secretaria Municipal de Educação de Colíder realizou a entrega de novos equipamentos e materiais para oito escolas
+        da rede pública, entre elas unidades localizadas em bairros urbanos e comunidades rurais. Foram contempladas estruturas
+        como mobiliário, itens de apoio pedagógico e recursos de tecnologia, buscando oferecer melhores condições de trabalho
+        para professores e servidores, além de mais conforto e segurança para os estudantes. A iniciativa integra um plano
+        contínuo de modernização da infraestrutura escolar, com foco na qualidade do ensino e na valorização da educação
+        básica no município.
       ]]></description>
     </item>
 
@@ -72,13 +80,17 @@
       <guid isPermaLink="false">https://www.colider.mt.gov.br/Imprensa/Noticias/#fundaf-27-cartoes</guid>
       <pubDate>Mon, 17 Nov 2025 10:00:00 GMT</pubDate>
       <description><![CDATA[
-        A Prefeitura de Colíder entregou 27 cartões do Programa FUNDAF, no valor de R$ 6 mil cada, voltados ao fortalecimento
-        da agricultura familiar no município. O benefício, disponibilizado em parceria com o Governo do Estado, permitirá que
-        pequenos produtores invistam em insumos, equipamentos e melhorias em suas propriedades.
+        A Prefeitura de Colíder efetuou a entrega de 27 cartões do Programa FUNDAF, cada um no valor de R$ 6 mil, destinados
+        a produtores da agricultura familiar do município. O benefício é resultado de parceria com o Governo do Estado e tem
+        como objetivo incentivar pequenos agricultores a investirem em insumos, equipamentos, estruturas de produção e
+        melhorias em suas propriedades. Segundo a gestão, o apoio financeiro também contribui para o fortalecimento da
+        economia local, estimula a permanência das famílias no campo e amplia a oferta de alimentos produzidos em Colíder
+        para o consumo interno e para programas públicos de aquisição de alimentos.
       ]]></description>
     </item>
 
   </channel>
 </rss>
+
 
 
