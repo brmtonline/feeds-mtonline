@@ -24,8 +24,8 @@ jobs:
 
       - name: Rodar script de atualização
         run: |
-          python3 .github/workflows/update_feeds.py
-
+          python3 update_feeds.py
+          
       - name: Commit e Push se houver mudanças
         run: |
           git config --global user.name "GitHub Actions"
