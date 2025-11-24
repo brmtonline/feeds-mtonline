@@ -2,16 +2,18 @@ name: Atualizar Feeds MT Online
 
 on:
   schedule:
-    - cron: "0 */4 * * *"   # Executa a cada 4 horas
-  workflow_dispatch:        # Permite rodar manualmente
+    # Executa a cada 4 horas
+    - cron: "0 */4 * * *"
+  # Permite rodar manualmente pelo botão "Executar fluxo de trabalho"
+  workflow_dispatch:
 
 jobs:
-  atualizar:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do repositório
-        uses: actions/checkout@v3
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
 
       - name: Configurar Python
         uses: actions/setup-python@v4
@@ -24,12 +26,13 @@ jobs:
 
       - name: Rodar script de atualização
         run: |
-          python3 update_feeds.py
-          
-      - name: Commit e Push se houver mudanças
+          python3 .github/workflows/update_feeds.py
+
+      - name: Commitar mudanças se houver
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add .
           git commit -m "Atualização automática dos feeds" || echo "Nenhuma alteração para commitar"
           git push
+
