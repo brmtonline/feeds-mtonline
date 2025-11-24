@@ -24,9 +24,9 @@ https://github.com/brmtonline/feeds-mtonline/blob/main/.github/workflows/update.
         run: |
           pip install requests beautifulsoup4 lxml
 
-      - name: Rodar script de atualização
+          - name: Rodar script de atualização
       run: |
-        python3 update_feeds.py
+        python3 .github/workflows/update_feeds.py
 
       - name: Commitar mudanças se houver
         run: |
