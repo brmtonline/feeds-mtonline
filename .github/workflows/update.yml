@@ -26,7 +26,7 @@ jobs:
 
       - name: Rodar script de atualização
         run: |
-          python3 update_feeds.py
+          python3 .github/workflows/update_feeds.py
 
       - name: Commitar mudanças se houver
         run: |
