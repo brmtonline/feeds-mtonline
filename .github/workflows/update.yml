@@ -36,3 +36,4 @@ jobs:
           git commit -m "Atualização automática dos feeds" || echo "Nenhuma alteração para commitar"
           git push
 
+
