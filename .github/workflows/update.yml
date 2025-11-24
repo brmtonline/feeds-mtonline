@@ -20,11 +20,11 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          pip install feedparser requests beautifulsoup4 lxml
+          pip install requests beautifulsoup4 lxml
 
-      - name: Baixar e atualizar feeds
+      - name: Rodar script de atualização
         run: |
-          python3 update_feeds.py
+          python3 .github/workflows/update_feeds.py
 
       - name: Commit e Push se houver mudanças
         run: |
@@ -33,5 +33,3 @@ jobs:
           git add .
           git commit -m "Atualização automática dos feeds" || echo "Nenhuma alteração para commitar"
           git push
-
-
