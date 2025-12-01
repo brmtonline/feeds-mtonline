@@ -1,19 +1,17 @@
 name: Atualizar Feeds MT Online
 
 on:
-  schedule:
-    # Executa a cada 4 horas
-    - cron: "0 */4 * * *"
-  # Permite rodar manualmente pelo botão "Executar fluxo de trabalho"
   workflow_dispatch:
+  schedule:
+    - cron: "0 */4 * * *"   # executa a cada 4 horas
 
 jobs:
-  update:
+  atualizar:
     runs-on: ubuntu-latest
-https://github.com/brmtonline/feeds-mtonline/blob/main/.github/workflows/update.yml
+
     steps:
-      - name: Baixar código do repositório
-        uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
       - name: Configurar Python
         uses: actions/setup-python@v4
@@ -22,18 +20,16 @@ https://github.com/brmtonline/feeds-mtonline/blob/main/.github/workflows/update.
 
       - name: Instalar dependências
         run: |
-          pip install requests beautifulsoup4 lxml
+          pip install requests beautifulsoup4 lxml feedparser
 
-          - name: Rodar script de atualização
-      run: |
-        python3 .github/workflows/update_feeds.py
+      - name: Rodar script de atualização
+        run: |
+          python3 update_feeds.py
 
-      - name: Commitar mudanças se houver
+      - name: Commit se houver mudanças
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add .
           git commit -m "Atualização automática dos feeds" || echo "Nenhuma alteração para commitar"
           git push
-
-
