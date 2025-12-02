@@ -6,7 +6,6 @@ from datetime import datetime, timezone
 from email.utils import format_datetime
 from pathlib import Path
 
-# Configuração das cidades
 CITIES = {
     "colider": {
         "name": "Prefeitura de Colíder",
@@ -38,12 +37,12 @@ CITIES = {
     },
 }
 
-MAX_ITEMS = 10  # Número máximo de notícias por feed
+MAX_ITEMS = 10
 OUTPUT_DIR = Path("feeds")
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 
-def log(msg: str):
+def log(msg: str) -> None:
     print(f"[{datetime.now().isoformat(sep=' ', timespec='seconds')}] {msg}")
 
 
@@ -57,12 +56,6 @@ def absolute_url(domain: str, href: str) -> str:
 
 
 def extract_list_links(city_key: str, cfg: dict):
-    """
-    Tenta extrair links de notícias a partir da página de listagem.
-    Estratégia genérica:
-      - pega <a> cujo href contenha '/Noticias/' ou '/Imprensa/Noticias/'
-      - filtra textos curtos (menu/rodapé)
-    """
     url = cfg["list_url"]
     domain = cfg["domain"]
     log(f"[{city_key}] Buscando lista de notícias em {url}")
@@ -82,7 +75,7 @@ def extract_list_links(city_key: str, cfg: dict):
             continue
 
         title = a.get_text(strip=True)
-        if not title or len(title) < 20:  # evita itens pequenos
+        if not title or len(title) < 20:
             continue
 
         if full in seen:
@@ -99,12 +92,6 @@ def extract_list_links(city_key: str, cfg: dict):
 
 
 def extract_article_details(article_url: str):
-    """
-    Tenta extrair:
-      - título (H1 ou <title>)
-      - primeiro parágrafo
-      - data (por enquanto: data atual)
-    """
     resp = requests.get(article_url, timeout=30)
     resp.raise_for_status()
     soup = BeautifulSoup(resp.text, "html.parser")
@@ -147,47 +134,38 @@ def build_rss(city_key: str, cfg: dict, items: list) -> str:
     channel_link = cfg["site_url"]
     channel_desc = cfg["description"]
 
-    rss_items_xml = []
+    rss_items = []
     for item in items:
         title = escape_xml(item["title"])
         link = escape_xml(item["url"])
-
-        desc_cdata = f"<![CDATA[{item['description']}]]>"
+        description = item["description"]
+        desc_cdata = "<![CDATA[" + description + "]]>"
         pub_date_str = format_datetime(item["pub_date"])
 
-        rss_items_xml.append(
-            f"""    <item>
-      <title>{title}</title>
-      <link>{link}</link>
-      <guid>{link}</guid>
-      <description>{desc_cdata}</description>
-      <pubDate>{pub_date_str}</pubDate>
-    </item>"""
-        )
+        item_xml_lines = [
+            "    <item>",
+            f"      <title>{title}</title>",
+            f"      <link>{link}</link>",
+            f"      <guid>{link}</guid>",
+            f"      <description>{desc_cdata}</description>",
+            f"      <pubDate>{pub_date_str}</pubDate>",
+            "    </item>",
+        ]
+        rss_items.append("\n".join(item_xml_lines))
 
-    items_block = "\n".join(rss_items_xml)
+    items_block = "\n".join(rss_items)
 
-    rss = f"""<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>{escape_xml(channel_title)}</title>
-    <link>{escape_xml(channel_link)}</link>
-    <description>{escape_xml(channel_desc)}</description>
-    <language>pt-BR</language>
-    <lastBuildDate>{format_datetime(now)}</lastBuildDate>
-
-{items_block}
-  </channel>
-</rss>
-"""
-    return rss
-
-
-def update_city_feed(city_key: str, cfg: dict):
-    links = extract_list_links(city_key, cfg)
-
-    articles = []
-    for link in links:
-        try:
-            details = extract_article_details(link["ur]()
-
+    header_lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<rss version="2.0">',
+        "  <channel>",
+        f"    <title>{escape_xml(channel_title)}</title>",
+        f"    <link>{escape_xml(channel_link)}</link>",
+        f"    <description>{escape_xml(channel_desc)}</description>",
+        "    <language>pt-BR</language>",
+        f"    <lastBuildDate>{format_datetime(now)}</lastBuildDate>",
+        "",
+    ]
+    footer_lines = [
+        "  </channel>",
+        "<
