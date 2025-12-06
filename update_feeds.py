@@ -1,193 +1,181 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Gera o feed RSS da Prefeitura de Colíder (MT) para o MT Online.
-Por enquanto, só trata Colíder. Depois adicionamos outras cidades.
+Por enquanto, só trata Colíder.
 """
 
-from __future__ import annotations
-
-import re
-from datetime import datetime, timezone
 from pathlib import Path
+from datetime import datetime, timezone
+from email.utils import formatdate
+import re
 
 import requests
 from bs4 import BeautifulSoup
 
-BASE_DIR = Path(__file__).parent
-OUTPUT_DIR = BASE_DIR / "feeds"
+# Diretório onde o feed será salvo
+OUTPUT_DIR = Path("feeds")
+OUTPUT_DIR.mkdir(exist_ok=True)
 
-COLIDER_LIST_URL = "https://www.colider.mt.gov.br/Imprensa/Noticias/"
-COLIDER_DOMAIN = "https://www.colider.mt.gov.br"
-
-# Meses em português para converter a data do card
-MONTHS_PT = {
-    "janeiro": 1,
-    "fevereiro": 2,
-    "março": 3,
-    "marco": 3,
-    "abril": 4,
-    "maio": 5,
-    "junho": 6,
-    "julho": 7,
-    "agosto": 8,
-    "setembro": 9,
-    "outubro": 10,
-    "novembro": 11,
-    "dezembro": 12,
-}
+BASE_URL = "https://www.colider.mt.gov.br"
+LIST_URL = BASE_URL + "/Imprensa/Noticias/"
 
 
-def fetch_html(url: str) -> str:
-    """Baixa HTML com requests."""
-    resp = requests.get(url, timeout=30)
-    resp.raise_for_status()
-    # Garante UTF-8
-    if not resp.encoding:
-        resp.encoding = "utf-8"
-    return resp.text
-
-
-def normalize_space(text: str) -> str:
-    return re.sub(r"\s+", " ", text).strip()
-
-
-def parse_colider_date(text: str) -> datetime:
-    """
-    O card começa assim:
-    '05 de Dezembro de 2025 Prefeitura de Colíder divulga ...'
-    Pegamos só a parte da data.
-    """
-    m = re.match(
-        r"^(\d{1,2}) de ([A-Za-zçÇéÉãõáíóúôâÊÔÂÚÍ]+) de (\d{4})",
-        text,
-    )
-    if not m:
-        # Se não bater o padrão, usa agora
-        return datetime.now(timezone.utc)
-
-    day = int(m.group(1))
-    month_name = m.group(2).lower()
-    year = int(m.group(3))
-
-    month = MONTHS_PT.get(month_name, 1)
-    return datetime(year, month, day, tzinfo=timezone.utc)
-
-
-def build_colider_items():
-    """Monta os itens de feed para a página de notícias de Colíder."""
-    base_url = "https://www.colider.mt.gov.br"
-    lista_url = base_url + "/Imprensa/Noticias/"
-
-    html = requests.get(lista_url, timeout=20).text
-    soup = BeautifulSoup(html, "html.parser")
-
-    items = []
-    agora = time.time()
-
-    # Percorre todos os links da página
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        texto = " ".join(a.get_text(strip=True).split())
-
-        # Queremos apenas links de notícias (descarta menu, rodapé, etc.)
-        if "/Imprensa/Noticias/" not in href:
-            continue
-
-        # Descarta links de acessibilidade (#content-main, #content-footer etc.)
-        if "#content-" in href or "#input-" in href:
-            continue
-
-        # Descarta itens sem texto de notícia (ex.: só "Notícias")
-        if " de 20" not in texto:
-            # os cards de notícias sempre têm algo como "05 de Dezembro de 2025 ..."
-            continue
-
-        # Monta URL absoluta
-        if href.startswith("http"):
-            link_completo = href
-        else:
-            link_completo = base_url + href
-
-        # Usa o próprio texto do card como título/descrição
-        titulo = texto
-        descricao = texto
-
-        item = {
-            "title": titulo,
-            "link": link_completo,
-            "guid": link_completo,
-            "description": descricao,
-            # por simplicidade, usa a data atual no pubDate
-            "pubDate": formatdate(agora, usegmt=True),
-        }
-        items.append(item)
-
-        # Limita a, por exemplo, 10 notícias mais recentes
-        if len(items) >= 10:
-            break
-
-    return items
-
-
-
-def format_rfc2822(dt: datetime) -> str:
-    return dt.strftime("%a, %d %b %Y %H:%M:%S %z")
+def log(msg: str) -> None:
+    now = datetime.now().isoformat(sep=" ", timespec="seconds")
+    print(f"[colider] {now} - {msg}")
 
 
 def escape_xml(text: str) -> str:
+    """Escapa caracteres especiais para XML."""
     return (
-        text.replace("&", "&amp;")
+        (text or "")
+        .replace("&", "&amp;")
         .replace("<", "&lt;")
         .replace(">", "&gt;")
         .replace('"', "&quot;")
     )
 
 
-def write_rss(slug: str, title: str, link: str, description: str, items: list) -> None:
-    OUTPUT_DIR.mkdir(exist_ok=True)
-    path = OUTPUT_DIR / f"{slug}.xml"
+def fetch_colider_items(max_items: int = 10):
+    """
+    Lê a página de notícias de Colíder e monta uma lista de itens de feed.
 
-    parts = []
-    parts.append('<?xml version="1.0" encoding="UTF-8"?>')
-    parts.append('<rss version="2.0">')
-    parts.append("<channel>")
-    parts.append(f"<title>{escape_xml(title)}</title>")
-    parts.append(f"<link>{escape_xml(link)}</link>")
-    parts.append(f"<description>{escape_xml(description)}</description>")
-    parts.append("<language>pt-BR</language>")
-    parts.append(f"<lastBuildDate>{format_rfc2822(datetime.now(timezone.utc))}</lastBuildDate>")
+    Usa somente a página de listagem (cards), sem abrir cada notícia,
+    para evitar pegar rodapé/cookies etc.
+    """
+    log(f"Buscando lista em {LIST_URL}")
+    resp = requests.get(LIST_URL, timeout=30)
+    resp.raise_for_status()
+
+    # Garante decodificação correta
+    if not resp.encoding:
+        resp.encoding = "utf-8"
+
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    items = []
+    seen_links = set()
+
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        text = " ".join(a.get_text(strip=True).split())
+
+        if not text:
+            continue
+
+        # Queremos apenas links de notícias
+        if "/Imprensa/Noticias/" not in href:
+            continue
+
+        # Evita âncoras internas e áreas de layout
+        if "#content-" in href or "#input-" in href or "#contentmenu" in href:
+            continue
+
+        # Ignora rodapé e UFCL
+        text_up = text.upper()
+        if "TODOS OS DIREITOS RESERVADOS" in text_up:
+            continue
+        if "UNIDADE FISCAL DO MUNICIPIO DE COLIDER" in text_up:
+            continue
+
+        # Os cards de notícia sempre têm algo como "05 de Dezembro de 2025 ..."
+        if " DE " not in text:
+            continue
+        if not re.search(r"\d{1,2}\s+de\s+[A-Za-zçÇéÉãõáíóúôâÊÔÂÚÍ]+\s+de\s+\d{4}", text):
+            # Se não tiver cara de data em português, pula
+            continue
+
+        # URL absoluta
+        if href.startswith("http"):
+            full_url = href
+        else:
+            full_url = BASE_URL + href
+
+        if full_url in seen_links:
+            continue
+        seen_links.add(full_url)
+
+        # Título: pega o restante do texto depois da data, se conseguir separar
+        m = re.match(
+            r"^(\d{1,2}\s+de\s+[A-Za-zçÇéÉãõáíóúôâÊÔÂÚÍ]+\s+de\s+\d{4})\s+(.*)$",
+            text,
+        )
+        if m:
+            title = m.group(2).strip()
+        else:
+            title = text
+
+        # Se o título ficar muito grande, corta um pouco
+        if len(title) > 150:
+            title = title[:150].rsplit(" ", 1)[0] + "..."
+
+        # Descrição: usa o texto inteiro do card (sem cortar demais)
+        description = text
+        if len(description) > 350:
+            description = description[:350].rsplit(" ", 1)[0] + "..."
+
+        pub_date = formatdate(usegmt=True)  # usa data/hora atual
+
+        items.append(
+            {
+                "title": title,
+                "link": full_url,
+                "guid": full_url,
+                "description": description,
+                "pubDate": pub_date,
+            }
+        )
+
+        if len(items) >= max_items:
+            break
+
+    log(f"Encontrados {len(items)} itens de notícias")
+    return items
+
+
+def build_rss(items):
+    """Monta o XML RSS em texto."""
+    now_rfc = formatdate(usegmt=True)
+
+    lines = []
+    lines.append('<?xml version="1.0" encoding="UTF-8"?>')
+    lines.append('<rss version="2.0">')
+    lines.append("<channel>")
+    lines.append(f"<title>{escape_xml('Prefeitura de Colíder')}</title>")
+    lines.append(f"<link>{escape_xml(LIST_URL)}</link>")
+    lines.append(
+        f"<description>{escape_xml('Últimas notícias da Prefeitura de Colíder (MT).')}</description>"
+    )
+    lines.append("<language>pt-BR</language>")
+    lines.append(f"<lastBuildDate>{now_rfc}</lastBuildDate>")
 
     for item in items:
-        parts.append("<item>")
-        parts.append(f"<title>{escape_xml(item['title'])}</title>")
-        parts.append(f"<link>{escape_xml(item['link'])}</link>")
-        parts.append(f"<guid>{escape_xml(item['link'])}</guid>")
-        # Descrição em CDATA pra aceitar acentos e quebras sem problema
-        parts.append(f"<![CDATA[{item['description']}]]>")
-        parts.append(f"<pubDate>{format_rfc2822(item['pubDate'])}</pubDate>")
-        parts.append("</item>")
+        lines.append("<item>")
+        lines.append(f"<title>{escape_xml(item['title'])}</title>")
+        lines.append(f"<link>{escape_xml(item['link'])}</link>")
+        lines.append(f"<guid>{escape_xml(item['guid'])}</guid>")
+        # descrição em CDATA para não ter problema com acentos e símbolos
+        lines.append(f"<![CDATA[{item['description']}]]>")
+        lines.append(f"<pubDate>{item['pubDate']}</pubDate>")
+        lines.append("</item>")
 
-    parts.append("</channel>")
-    parts.append("</rss>")
+    lines.append("</channel>")
+    lines.append("</rss>")
 
-    path.write_text("\n".join(parts), encoding="utf-8")
+    return "\n".join(lines)
 
 
-def main() -> None:
-    items = build_colider_items()
+def main():
+    items = fetch_colider_items()
     if not items:
-        # Se não achar nada, não sobrescreve o arquivo anterior
-        print("[colider] Nenhuma notícia encontrada; feed não atualizado.")
+        log("Nenhuma notícia encontrada; feed não será atualizado.")
         return
 
-    write_rss(
-        slug="colider",
-        title="Prefeitura de Colíder",
-        link=COLIDER_LIST_URL,
-        description="Últimas notícias da Prefeitura de Colíder (MT).",
-        items=items,
-    )
-    print(f"[colider] Feed atualizado com {len(items)} itens.")
+    rss_text = build_rss(items)
+    output_file = OUTPUT_DIR / "colider.xml"
+    output_file.write_text(rss_text, encoding="utf-8")
+    log(f"Feed atualizado em {output_file}")
 
 
 if __name__ == "__main__":
