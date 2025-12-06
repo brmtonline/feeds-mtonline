@@ -73,90 +73,61 @@ def parse_colider_date(text: str) -> datetime:
     return datetime(year, month, day, tzinfo=timezone.utc)
 
 
-def build_colider_items() -> list:
-    """
-    Lê a lista de notícias de Colíder e monta uma lista de itens para o RSS.
-    Usa apenas o texto do card (data + título + início da matéria).
-    """
-    html = fetch_html(COLIDER_LIST_URL)
+def build_colider_items():
+    """Monta os itens de feed para a página de notícias de Colíder."""
+    base_url = "https://www.colider.mt.gov.br"
+    lista_url = base_url + "/Imprensa/Noticias/"
+
+    html = requests.get(lista_url, timeout=20).text
     soup = BeautifulSoup(html, "html.parser")
 
     items = []
-    seen_links = set()
+    agora = time.time()
 
+    # Percorre todos os links da página
     for a in soup.find_all("a", href=True):
         href = a["href"]
+        texto = " ".join(a.get_text(strip=True).split())
 
-        # Só links de notícia
+        # Queremos apenas links de notícias (descarta menu, rodapé, etc.)
         if "/Imprensa/Noticias/" not in href:
             continue
 
-        # Ignora âncoras internas e lixos do layout
-        if "#content-" in href or "#input-" in href or "#contentmenu" in href or "#content-footer" in href:
+        # Descarta links de acessibilidade (#content-main, #content-footer etc.)
+        if "#content-" in href or "#input-" in href:
             continue
 
-        text = normalize_space(a.get_text(" ", strip=True))
-        if not text:
+        # Descarta itens sem texto de notícia (ex.: só "Notícias")
+        if " de 20" not in texto:
+            # os cards de notícias sempre têm algo como "05 de Dezembro de 2025 ..."
             continue
 
-        # Ignora rodapé e coisas institucionais
-        if "Todos os Direitos Reservados" in text:
-            continue
-        if "UNIDADE FISCAL DO MUNICIPIO" in text.upper():
-            continue
-
-        # Garante que começa com um padrão de data em português
-        if not re.match(r"^\d{1,2} de [A-Za-zçÇéÉãõáíóúôâÊÔÂÚÍ]+ de \d{4}", text):
-            continue
-
-        # Link absoluto
+        # Monta URL absoluta
         if href.startswith("http"):
-            url = href
+            link_completo = href
         else:
-            url = COLIDER_DOMAIN + href
+            link_completo = base_url + href
 
-        if url in seen_links:
-            continue
-        seen_links.add(url)
+        # Usa o próprio texto do card como título/descrição
+        titulo = texto
+        descricao = texto
 
-        # Separa data e resto
-        m = re.match(
-            r"^(\d{1,2} de [A-Za-zçÇéÉãõáíóúôâÊÔÂÚÍ]+ de \d{4})\s+(.*)$",
-            text,
-        )
-        if m:
-            date_str = m.group(1)
-            rest = m.group(2)
-        else:
-            date_str = ""
-            rest = text
+        item = {
+            "title": titulo,
+            "link": link_completo,
+            "guid": link_completo,
+            "description": descricao,
+            # por simplicidade, usa a data atual no pubDate
+            "pubDate": formatdate(agora, usegmt=True),
+        }
+        items.append(item)
 
-        # Título = começo do restante (até ~120 caracteres)
-        title = rest
-        if len(title) > 120:
-            title = title[:120].rsplit(" ", 1)[0] + "..."
-
-        # Descrição = texto do card inteiro (sem a data no começo)
-        description = rest
-        if len(description) > 300:
-            description = description[:300].rsplit(" ", 1)[0] + "..."
-
-        pub_date = parse_colider_date(text)
-
-        items.append(
-            {
-                "title": title,
-                "link": url,
-                "description": description,
-                "pubDate": pub_date,
-            }
-        )
-
-        # 6 notícias já está ótimo
-        if len(items) >= 6:
+        # Limita a, por exemplo, 10 notícias mais recentes
+        if len(items) >= 10:
             break
 
     return items
+
 
 
 def format_rfc2822(dt: datetime) -> str:
