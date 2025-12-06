@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Feed de teste - colider</title>
-    <link>https://www.mtonline.com.br/</link>
-    <description>Feed de teste automático para colider</description>
+    <title>Prefeitura de Colíder</title>
+    <link>https://www.colider.mt.gov.br/Imprensa/Noticias/</link>
+    <description>Últimas notícias da Prefeitura de Colíder (MT).</description>
     <language>pt-BR</language>
+    <lastBuildDate>Sat, 06 Dec 2025 00:41:30 +0000</lastBuildDate>
+
+    <item>
+      <title>Todos os Direitos Reservados - Prefeitura de Colíder - 2025</title>
+      <link>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-main</link>
+      <guid>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-main</guid>
+      <description><![CDATA[UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL
+                                        52,69 EM EXERCÍCIO 2025 UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL 52,69 EM EXERCÍCIO 2025]]></description>
+      <pubDate>Sat, 06 Dec 2025 00:41:27 +0000</pubDate>
+    </item>
+    <item>
+      <title>Todos os Direitos Reservados - Prefeitura de Colíder - 2025</title>
+      <link>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-menu</link>
+      <guid>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-menu</guid>
+      <description><![CDATA[UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL
+                                        52,69 EM EXERCÍCIO 2025 UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL 52,69 EM EXERCÍCIO 2025]]></description>
+      <pubDate>Sat, 06 Dec 2025 00:41:28 +0000</pubDate>
+    </item>
+    <item>
+      <title>Todos os Direitos Reservados - Prefeitura de Colíder - 2025</title>
+      <link>https://www.colider.mt.gov.br/Imprensa/Noticias/#input_pesquisa</link>
+      <guid>https://www.colider.mt.gov.br/Imprensa/Noticias/#input_pesquisa</guid>
+      <description><![CDATA[UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL
+                                        52,69 EM EXERCÍCIO 2025 UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL 52,69 EM EXERCÍCIO 2025]]></description>
+      <pubDate>Sat, 06 Dec 2025 00:41:29 +0000</pubDate>
+    </item>
+    <item>
+      <title>Todos os Direitos Reservados - Prefeitura de Colíder - 2025</title>
+      <link>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-footer</link>
+      <guid>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-footer</guid>
+      <description><![CDATA[UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL
+                                        52,69 EM EXERCÍCIO 2025 UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL 52,69 EM EXERCÍCIO 2025]]></description>
+      <pubDate>Sat, 06 Dec 2025 00:41:30 +0000</pubDate>
+    </item>
   </channel>
 </rss>
