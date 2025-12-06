@@ -1,43 +1,213 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>Prefeitura de Colíder</title>
-    <link>https://www.colider.mt.gov.br/Imprensa/Noticias/</link>
-    <description>Últimas notícias da Prefeitura de Colíder (MT).</description>
-    <language>pt-BR</language>
-    <lastBuildDate>Sat, 06 Dec 2025 00:41:30 +0000</lastBuildDate>
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Atualiza o feed RSS da Prefeitura de Colíder (MT) para o portal MT Online.
 
-    <item>
-      <title>Todos os Direitos Reservados - Prefeitura de Colíder - 2025</title>
-      <link>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-main</link>
-      <guid>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-main</guid>
-      <description><![CDATA[UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL
-                                        52,69 EM EXERCÍCIO 2025 UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL 52,69 EM EXERCÍCIO 2025]]></description>
-      <pubDate>Sat, 06 Dec 2025 00:41:27 +0000</pubDate>
-    </item>
-    <item>
-      <title>Todos os Direitos Reservados - Prefeitura de Colíder - 2025</title>
-      <link>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-menu</link>
-      <guid>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-menu</guid>
-      <description><![CDATA[UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL
-                                        52,69 EM EXERCÍCIO 2025 UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL 52,69 EM EXERCÍCIO 2025]]></description>
-      <pubDate>Sat, 06 Dec 2025 00:41:28 +0000</pubDate>
-    </item>
-    <item>
-      <title>Todos os Direitos Reservados - Prefeitura de Colíder - 2025</title>
-      <link>https://www.colider.mt.gov.br/Imprensa/Noticias/#input_pesquisa</link>
-      <guid>https://www.colider.mt.gov.br/Imprensa/Noticias/#input_pesquisa</guid>
-      <description><![CDATA[UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL
-                                        52,69 EM EXERCÍCIO 2025 UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL 52,69 EM EXERCÍCIO 2025]]></description>
-      <pubDate>Sat, 06 Dec 2025 00:41:29 +0000</pubDate>
-    </item>
-    <item>
-      <title>Todos os Direitos Reservados - Prefeitura de Colíder - 2025</title>
-      <link>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-footer</link>
-      <guid>https://www.colider.mt.gov.br/Imprensa/Noticias/#content-footer</guid>
-      <description><![CDATA[UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL
-                                        52,69 EM EXERCÍCIO 2025 UNIDADE FISCAL DO MUNICIPIO DE COLÍDER - UFCL 52,69 EM EXERCÍCIO 2025]]></description>
-      <pubDate>Sat, 06 Dec 2025 00:41:30 +0000</pubDate>
-    </item>
-  </channel>
-</rss>
+- Lê a página de notícias de Colíder;
+- Extrai os cards de notícia (data + título + resumo);
+- Monta um RSS básico;
+- Salva em feeds/colider.xml.
+
+Por enquanto, o script só trata Colíder. Depois podemos ir
+adicionando outras cidades no mesmo padrão.
+"""
+
+from pathlib import Path
+from email.utils import formatdate
+
+import re
+import requests
+from bs4 import BeautifulSoup
+
+# -------------------------------------------------------------------
+# Configurações básicas
+# -------------------------------------------------------------------
+
+BASE_URL = "https://www.colider.mt.gov.br"
+NEWS_LIST_URL = BASE_URL + "/Imprensa/Noticias/"
+
+OUTPUT_DIR = Path("feeds")
+OUTPUT_DIR.mkdir(exist_ok=True)  # cria pasta feeds/ se não existir
+
+
+def log(msg: str) -> None:
+    """Log simples para aparecer nos logs do GitHub Actions."""
+    print(f"[colider] {msg}")
+
+
+def escape_xml(text: str) -> str:
+    """Escapa caracteres especiais para XML."""
+    if text is None:
+        return ""
+    return (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+    )
+
+
+# -------------------------------------------------------------------
+# Coleta de notícias de Colíder
+# -------------------------------------------------------------------
+
+def fetch_colider_items(max_items: int = 10):
+    """
+    Lê a página de notícias de Colíder e retorna uma lista de itens
+    para o feed RSS.
+
+    Cada item é um dicionário com:
+      - title
+      - link
+      - guid
+      - description
+      - pubDate (RFC 2822)
+    """
+    log(f"Buscando lista de notícias em {NEWS_LIST_URL}")
+    resp = requests.get(NEWS_LIST_URL, timeout=30)
+    resp.raise_for_status()
+
+    # Garante decodificação correta
+    if not resp.encoding:
+        resp.encoding = "utf-8"
+
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    items = []
+    seen_links = set()
+
+    # Na página, cada notícia está como um link grande com texto
+    # "05 de Dezembro de 2025 Título da notícia Resumo..."
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        text = " ".join(a.get_text(strip=True).split())
+
+        if not text:
+            continue
+
+        # Queremos apenas links para /Imprensa/Noticias/...
+        if "/Imprensa/Noticias/" not in href:
+            continue
+
+        # Ignora âncoras internas e coisas de layout
+        if "#content-" in href or "#input-" in href or "#contentmenu" in href:
+            continue
+
+        # Ignora coisas óbvias de rodapé
+        upper = text.upper()
+        if "TODOS OS DIREITOS RESERVADOS" in upper:
+            continue
+        if "UNIDADE FISCAL DO MUNICIPIO DE COLÍDER" in upper:
+            continue
+
+        # Precisa ter uma data no padrão "05 de Dezembro de 2025"
+        m_data = re.search(
+            r"\d{1,2}\s+de\s+[A-Za-zçÇéÉãõáíóúôâÊÔÂÚÍ]+\s+de\s+\d{4}",
+            text,
+        )
+        if not m_data:
+            continue
+
+        # Se chegar aqui, é um card de notícia.
+        # Vamos separar: data + resto (título + resumo)
+        data_str = m_data.group(0)
+        resto = text[m_data.end() :].strip()
+
+        # Título: primeira parte do "resto" até um pedaço razoável
+        # (a página já traz "Data + Título + começo do texto").
+        # Vamos considerar o título até o primeiro ponto final ou
+        # até ~120 caracteres.
+        titulo = resto
+        ponto = titulo.find(".")
+        if 0 < ponto < 120:
+            titulo = titulo[:ponto]
+        if len(titulo) > 150:
+            titulo = titulo[:150].rsplit(" ", 1)[0] + "..."
+
+        # Descrição: o texto completo (data + resto), cortado se for muito longo
+        descricao = f"{data_str} {resto}"
+        if len(descricao) > 400:
+            descricao = descricao[:400].rsplit(" ", 1)[0] + "..."
+
+        # URL absoluta
+        if href.startswith("http"):
+            url = href
+        else:
+            url = BASE_URL + href
+
+        if url in seen_links:
+            continue
+        seen_links.add(url)
+
+        pub_date = formatdate(usegmt=True)
+
+        items.append(
+            {
+                "title": titulo,
+                "link": url,
+                "guid": url,
+                "description": descricao,
+                "pubDate": pub_date,
+            }
+        )
+
+        if len(items) >= max_items:
+            break
+
+    log(f"Encontrados {len(items)} itens de notícias.")
+    return items
+
+
+# -------------------------------------------------------------------
+# Montagem do RSS
+# -------------------------------------------------------------------
+
+def build_rss_channel(items):
+    """Monta o XML RSS (como string) a partir da lista de itens."""
+    last_build = formatdate(usegmt=True)
+
+    lines = []
+    lines.append('<?xml version="1.0" encoding="UTF-8"?>')
+    lines.append('<rss version="2.0">')
+    lines.append("<channel>")
+    lines.append(f"<title>{escape_xml('Prefeitura de Colíder')}</title>")
+    lines.append(f"<link>{escape_xml(NEWS_LIST_URL)}</link>")
+    lines.append(
+        f"<description>{escape_xml('Últimas notícias da Prefeitura de Colíder (MT).')}</description>"
+    )
+    lines.append("<language>pt-BR</language>")
+    lines.append(f"<lastBuildDate>{last_build}</lastBuildDate>")
+
+    for it in items:
+        lines.append("<item>")
+        lines.append(f"<title>{escape_xml(it['title'])}</title>")
+        lines.append(f"<link>{escape_xml(it['link'])}</link>")
+        lines.append(f"<guid>{escape_xml(it['guid'])}</guid>")
+        # descrição em CDATA para preservar acentos e caracteres especiais
+        lines.append(f"<description><![CDATA[{it['description']}]]></description>")
+        lines.append(f"<pubDate>{it['pubDate']}</pubDate>")
+        lines.append("</item>")
+
+    lines.append("</channel>")
+    lines.append("</rss>")
+    return "\n".join(lines)
+
+
+# -------------------------------------------------------------------
+# Execução principal
+# -------------------------------------------------------------------
+
+def main():
+    items = fetch_colider_items(max_items=10)
+    if not items:
+        log("Nenhuma notícia encontrada. Feed não será atualizado.")
+        return
+
+    rss_xml = build_rss_channel(items)
+    output_file = OUTPUT_DIR / "colider.xml"
+    output_file.write_text(rss_xml, encoding="utf-8")
+    log(f"Feed atualizado em {output_file}")
+
+
+if __name__ == "__main__":
+    main()
