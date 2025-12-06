@@ -79,7 +79,7 @@ def build_colider_items() -> list:
     Usa apenas o texto do card (data + título + início da matéria).
     """
     html = fetch_html(COLIDER_LIST_URL)
-    soup = BeautifulSoup(html, "lxml")
+    soup = BeautifulSoup(html, "html.parser")
 
     items = []
     seen_links = set()
