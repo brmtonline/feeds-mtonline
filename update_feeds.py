@@ -156,7 +156,7 @@ def build_rss(items):
         lines.append(f"<link>{escape_xml(item['link'])}</link>")
         lines.append(f"<guid>{escape_xml(item['guid'])}</guid>")
         # descrição em CDATA para não ter problema com acentos e símbolos
-        lines.append(f"<![CDATA[{item['description']}]]>")
+        lines.append(f"<description><![CDATA[{item['description']}]]></description>")
         lines.append(f"<pubDate>{item['pubDate']}</pubDate>")
         lines.append("</item>")
 
