@@ -1,9 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
-  <channel>
-    <title>Feed de teste - altafloresta</title>
-    <link>https://www.mtonline.com.br/</link>
-    <description>Feed de teste automático para altafloresta</description>
-    <language>pt-BR</language>
-  </channel>
+<channel>
+<title>Prefeitura de Alta Floresta | MT Online</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/</link>
+<description>Últimas notícias de Alta Floresta - MT</description>
+<language>pt-BR</language>
+<lastBuildDate>Mon, 01 Jun 2026 23:36:06 GMT</lastBuildDate>
+<item>
+<title>Notícias</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/</guid>
+<description><![CDATA[Notícias]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>Prefeitura de Alta Floresta anuncia publicação dos editais da (PNAB)</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Prefeitura-de-alta-floresta-anuncia-publicacao-dos-editais-da-pnab-4584/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Prefeitura-de-alta-floresta-anuncia-publicacao-dos-editais-da-pnab-4584/</guid>
+<description><![CDATA[29 de Maio de 2026 - Prefeitura de Alta Floresta anuncia publicação dos editais da (PNAB)]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>Saúde Bucal de Alta Floresta tem quatro experiências selecionadas para Congresso Internacional em Cuiabá</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Saude-bucal-de-alta-floresta-tem-quatro-experiencias-selecionadas-para-congresso-internacional-em-cuiaba-4583/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Saude-bucal-de-alta-floresta-tem-quatro-experiencias-selecionadas-para-congresso-internacional-em-cuiaba-4583/</guid>
+<description><![CDATA[29 de Maio de 2026 - Saúde Bucal de Alta Floresta tem quatro experiências selecionadas para Congresso Internacional em Cuiabá]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>NOTA DE REPÚDIO</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Nota-de-repudio-4581/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Nota-de-repudio-4581/</guid>
+<description><![CDATA[28 de Maio de 2026 - NOTA DE REPÚDIO]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>Secretaria de Saúde de Alta Floresta e DRE AF promovem evento de mobilização  voltado a prevenção do tabagismo e cigarros eletrônicos</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Secretaria-de-saude-de-alta-floresta-e-dre-af-promovem-evento-de-mobilizacao--voltado-a-prevencao-do-tabagismo-e-cigarros-eletronicos-4582/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Secretaria-de-saude-de-alta-floresta-e-dre-af-promovem-evento-de-mobilizacao--voltado-a-prevencao-do-tabagismo-e-cigarros-eletronicos-4582/</guid>
+<description><![CDATA[28 de Maio de 2026 - Secretaria de Saúde de Alta Floresta e DRE AF promovem evento de mobilização  voltado a prevenção do tabagismo e cigarros eletrônicos]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>Prefeitura de Alta Floresta abre Processo Seletivo Simplificado para contratação da Brigada Municipal</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Prefeitura-de-alta-floresta-abre-processo-seletivo-simplificado-para-contratacao-da-brigada-municipal-4578/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Prefeitura-de-alta-floresta-abre-processo-seletivo-simplificado-para-contratacao-da-brigada-municipal-4578/</guid>
+<description><![CDATA[28 de Maio de 2026 - Prefeitura de Alta Floresta abre Processo Seletivo Simplificado para contratação da Brigada Municipal]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>Caminhada na Natureza: Circuito Anacã, reuniu milhares de participantes em um verdadeiro encontro entre saúde, lazer, turismo rural e preservação ambiental.</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Caminhada-na-natureza-circuito-anaca-reuniu-milhares-de-participantes-em-um-verdadeiro-encontro-entre-saude-lazer-turismo-rural-e-preservacao-ambiental-4577/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Caminhada-na-natureza-circuito-anaca-reuniu-milhares-de-participantes-em-um-verdadeiro-encontro-entre-saude-lazer-turismo-rural-e-preservacao-ambiental-4577/</guid>
+<description><![CDATA[27 de Maio de 2026 - Caminhada na Natureza: Circuito Anacã, reuniu milhares de participantes em um verdadeiro encontro entre saúde, lazer, turismo rural e preservação ambiental.]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>Secretaria de Fazenda realiza Audiência Pública de prestação de contas do 1º quadrimestre de 2026</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Secretaria-de-fazenda-realiza-audiencia-publica-de-prestacao-de-contas-do-1-quadrimestre-de-2026-4575/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Secretaria-de-fazenda-realiza-audiencia-publica-de-prestacao-de-contas-do-1-quadrimestre-de-2026-4575/</guid>
+<description><![CDATA[25 de Maio de 2026 - Secretaria de Fazenda realiza Audiência Pública de prestação de contas do 1º quadrimestre de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>Jogos Regionais Estudantis Mato-grossenses (JOREMs) 2026, teve inicio na sexta-feira (22/05) com a participação de 17 município da região norte e mais de mil alunos.…</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Jogos-regionais-estudantis-mato-grossenses-jorems-2026-teve-inicio-na-sexta-feira-2205-com-a-participacao-de-17-municipio-da-regiao-norte-e-mais-de-mil-alunos-4574/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Jogos-regionais-estudantis-mato-grossenses-jorems-2026-teve-inicio-na-sexta-feira-2205-com-a-participacao-de-17-municipio-da-regiao-norte-e-mais-de-mil-alunos-4574/</guid>
+<description><![CDATA[25 de Maio de 2026 - Jogos Regionais Estudantis Mato-grossenses (JOREMs) 2026, teve inicio na sexta-feira (22/05) com a participação de 17 município da região norte e mais de mil alunos.…]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+<item>
+<title>Prefeitura de Alta Floresta intensifica ações da campanha Maio Vermelho 2026 para prevenção do câncer bucal</title>
+<link>https://www.altafloresta.mt.gov.br/Noticias/Prefeitura-de-alta-floresta-intensifica-acoes-da-campanha-maio-vermelho-2026-para-prevencao-do-cancer-bucal-4573/</link>
+<guid>https://www.altafloresta.mt.gov.br/Noticias/Prefeitura-de-alta-floresta-intensifica-acoes-da-campanha-maio-vermelho-2026-para-prevencao-do-cancer-bucal-4573/</guid>
+<description><![CDATA[25 de Maio de 2026 - Prefeitura de Alta Floresta intensifica ações da campanha Maio Vermelho 2026 para prevenção do câncer bucal]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:06 GMT</pubDate>
+</item>
+</channel>
 </rss>
