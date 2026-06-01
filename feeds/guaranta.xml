@@ -1,9 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
-  <channel>
-    <title>Feed de teste - guaranta</title>
-    <link>https://www.mtonline.com.br/</link>
-    <description>Feed de teste automático para guaranta</description>
-    <language>pt-BR</language>
-  </channel>
+<channel>
+<title>Prefeitura de Guarantã do Norte | MT Online</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/</link>
+<description>Últimas notícias de Guarantã do Norte - MT</description>
+<language>pt-BR</language>
+<lastBuildDate>Mon, 01 Jun 2026 23:36:14 GMT</lastBuildDate>
+<item>
+<title>Notícias</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/</guid>
+<description><![CDATA[Notícias]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>28 de Maio de 2026</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/45-anos-de-guaranta-do-norte-3206/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/45-anos-de-guaranta-do-norte-3206/</guid>
+<description><![CDATA[28 de Maio de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>28 de Maio de 2026</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/Secretaria-municipal-de-saude-acompanha-caso-suspeito-de-meningite-em-guaranta-do-norte-3205/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/Secretaria-municipal-de-saude-acompanha-caso-suspeito-de-meningite-em-guaranta-do-norte-3205/</guid>
+<description><![CDATA[28 de Maio de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>28 de Maio de 2026</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/45-anos-de-guaranta-do-norte-3204/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/45-anos-de-guaranta-do-norte-3204/</guid>
+<description><![CDATA[28 de Maio de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>27 de Maio de 2026</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/Guaranta-do-norte-celebra-45-anos-com-grande-festa-no-lago-municipal-3203/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/Guaranta-do-norte-celebra-45-anos-com-grande-festa-no-lago-municipal-3203/</guid>
+<description><![CDATA[27 de Maio de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>26 de Maio de 2026</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/Cavalgada-em-comemoracao-ao-45-aniversario-de-guaranta-do-norte-3198/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/Cavalgada-em-comemoracao-ao-45-aniversario-de-guaranta-do-norte-3198/</guid>
+<description><![CDATA[26 de Maio de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>21 de Maio de 2026</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/Final-olimpiadas-escolares-do-campo-guaranta-do-norte-edicao-2026-3195/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/Final-olimpiadas-escolares-do-campo-guaranta-do-norte-edicao-2026-3195/</guid>
+<description><![CDATA[21 de Maio de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>13 de Maio de 2026</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/Olimpiadas-escolares-do-campo-guaranta-do-norte-edicao-2026-3192/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/Olimpiadas-escolares-do-campo-guaranta-do-norte-edicao-2026-3192/</guid>
+<description><![CDATA[13 de Maio de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>11 de Maio de 2026</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/Mutirao-de-consultas-de-oftalmologista-3190/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/Mutirao-de-consultas-de-oftalmologista-3190/</guid>
+<description><![CDATA[11 de Maio de 2026]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+<item>
+<title>Última</title>
+<link>https://www.guarantadonorte.mt.gov.br/Noticias/29/</link>
+<guid>https://www.guarantadonorte.mt.gov.br/Noticias/29/</guid>
+<description><![CDATA[Última]]></description>
+<pubDate>Mon, 01 Jun 2026 23:36:14 GMT</pubDate>
+</item>
+</channel>
 </rss>
